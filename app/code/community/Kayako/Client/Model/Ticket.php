@@ -96,15 +96,15 @@ class Kayako_Client_Model_Ticket extends Kayako_Client_Model_Authentication
 	public function getAllTickets($userEmail, $params = array())
 	{
 		// Load departments
-		$objDepartment              = Mage::getModel("client/department");
-		$_departmentObjectContainer = $objDepartment->getAllDepartments();
+		$_objDepartment              = Mage::getModel("client/department");
+		$_departmentObjectContainer = $_objDepartment->getAllDepartments();
 
 		// Load ticket status
 		$_ticketStatusObjectContainer = $this->getTicketStatusList();
 
 		// Load Users
-		$objUser              = Mage::getModel("client/user");
-		$_UserObjectContainer = $objUser->getUser($userEmail);
+		$_objUser              = Mage::getModel("client/user");
+		$_userObjectContainer = $_objUser->getUser($userEmail);
 
 		if (empty($params['dir'])) {
 			$params['dir'] = 'asc';
@@ -123,7 +123,7 @@ class Kayako_Client_Model_Ticket extends Kayako_Client_Model_Authentication
 		$_orderByFunction = $this->getOrderByFunctionName($params['order']);
 
 		// Load all tickets
-		$_ticketObjectContainer = kyTicket::getAll($_departmentObjectContainer, $_ticketStatusObjectContainer, -1, $_UserObjectContainer)->filterByEmail($userEmail)->$_orderByFunction($_sortBy);
+		$_ticketObjectContainer = kyTicket::getAll($_departmentObjectContainer, $_ticketStatusObjectContainer, -1, $_userObjectContainer)->filterByEmail($userEmail)->$_orderByFunction($_sortBy);
 
 		return $_ticketObjectContainer;
 	}
