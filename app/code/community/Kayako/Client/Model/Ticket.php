@@ -102,6 +102,10 @@ class Kayako_Client_Model_Ticket extends Kayako_Client_Model_Authentication
 		// Load ticket status
 		$_ticketStatusObjectContainer = $this->getTicketStatusList();
 
+		// Load Users
+		$objUser              = Mage::getModel("client/user");
+		$_UserObjectContainer = $objUser->getUser($userEmail);
+
 		if (empty($params['dir'])) {
 			$params['dir'] = 'asc';
 		}
@@ -119,7 +123,7 @@ class Kayako_Client_Model_Ticket extends Kayako_Client_Model_Authentication
 		$_orderByFunction = $this->getOrderByFunctionName($params['order']);
 
 		// Load all tickets
-		$_ticketObjectContainer = kyTicket::getAll($_departmentObjectContainer, $_ticketStatusObjectContainer)->filterByEmail($userEmail)->$_orderByFunction($_sortBy);
+		$_ticketObjectContainer = kyTicket::getAll($_departmentObjectContainer, $_ticketStatusObjectContainer, -1, $_UserObjectContainer)->filterByEmail($userEmail)->$_orderByFunction($_sortBy);
 
 		return $_ticketObjectContainer;
 	}
